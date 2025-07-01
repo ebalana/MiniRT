@@ -32,43 +32,43 @@ all: $(NAME)
 
 # Verificar e inicializar submódulos si es necesario
 check-submodules:
-    @if [ ! -f $(MLX_DIR)/CMakeLists.txt ]; then \
-        echo "$(YELLOW)Inicializando submódulos...$(DEF_COLOR)"; \
-        git submodule update --init --recursive; \
-    fi
+	@if [ ! -f $(MLX_DIR)/CMakeLists.txt ]; then \
+		echo "$(YELLOW)Inicializando submódulos...$(DEF_COLOR)"; \
+		git submodule update --init --recursive; \
+	fi
 
 # Compilar MLX42 (depende de check-submodules)
 $(MLX_LIB): check-submodules
-    @echo "$(CYAN)Compilando MLX42...$(DEF_COLOR)"
-    cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
-    cmake --build $(MLX_DIR)/build --parallel
+	@echo "$(CYAN)Compilando MLX42...$(DEF_COLOR)"
+	cmake -S $(MLX_DIR) -B $(MLX_DIR)/build
+	cmake --build $(MLX_DIR)/build --parallel
 
 # Compilar ultimate_libft
 $(LIBFT_LIB):
-    @echo "$(CYAN)Compilando ultimate_libft...$(DEF_COLOR)"
-    $(MAKE) -C $(LIBFTDIR)
+	@echo "$(CYAN)Compilando ultimate_libft...$(DEF_COLOR)"
+	$(MAKE) -C $(LIBFTDIR)
 
 # Compilar archivos objeto
 %.o: %.c Makefile $(HEADER)
-    @echo "$(GREEN)Compilando $<...$(DEF_COLOR)"
-    $(CC) $(CFLAGS) $(MLX_INCLUDE) -Ilib -c $< -o $@
+	@echo "$(GREEN)Compilando $<...$(DEF_COLOR)"
+	$(CC) $(CFLAGS) $(MLX_INCLUDE) -Ilib -c $< -o $@
 
 # Compilar el ejecutable principal
-$(NAME): $(OBJS) $(LIBFT_LIB) $(MLX_LIB)
-    @echo "$(BLUE)Linking $(NAME)...$(DEF_COLOR)"
-    $(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(MLX_LIB) $(MLX_FLAGS) -o $(NAME)
-    @echo "$(GREEN)$(NAME) compilado exitosamente!$(DEF_COLOR)"
+$(NAME): check-submodules $(OBJS) $(LIBFT_LIB) $(MLX_LIB)
+	@echo "$(BLUE)Linking $(NAME)...$(DEF_COLOR)"
+	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) $(MLX_LIB) $(MLX_FLAGS) -o $(NAME)
+	@echo "$(GREEN)$(NAME) compilado exitosamente!$(DEF_COLOR)"
 
 # Limpiar archivos objeto
 clean:
-    $(RM) $(OBJS)
-    $(MAKE) -C $(LIBFTDIR) clean
+	$(RM) $(OBJS)
+	$(MAKE) -C $(LIBFTDIR) clean
 
 # Limpiar todo
 fclean: clean
-    $(RM) $(NAME)
-    $(MAKE) -C $(LIBFTDIR) fclean
-    $(RM) -rf $(MLX_DIR)/build
+	$(RM) $(NAME)
+	$(MAKE) -C $(LIBFTDIR) fclean
+	$(RM) -rf $(MLX_DIR)/build
 
 # Recompilar todo
 re: fclean all

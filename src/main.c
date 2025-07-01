@@ -6,14 +6,12 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/01 13:04:11 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:40:37 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-#define WIDTH 800
-#define HEIGHT 600
 #define WHITE 0xFFFFFFFF
 #define BLACK 0x000000FF
 

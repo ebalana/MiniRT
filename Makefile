@@ -25,6 +25,7 @@ MLX_FLAGS = -ldl -lglfw -pthread -lm
 SRCS = 	src/main.c \
 		src/ray.c \
 		src/vec3.c \
+		src/scene.c \
 
 OBJS = $(SRCS:.c=.o)
 

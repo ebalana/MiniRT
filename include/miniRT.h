@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 14:05:32 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/03 16:44:12 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@
 
 # include "vec3.h"
 # include "ray.h"
-# include "sphere.h"
+# include "scene.h"
 
 #define WIDTH 1900
 #define HEIGHT 1280
+
+# define SPHERES_COUNT 3
+
+
 
 #endif

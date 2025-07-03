@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   sphere.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 14:05:32 by ebalana-         ###   ########.fr       */
+/*   Created: 2025/07/03 14:06:02 by ebalana-          #+#    #+#             */
+/*   Updated: 2025/07/03 14:06:53 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef SHPERE_H
+# define SHPERE_H
 
-# include "../lib/MLX42/include/MLX42/MLX42.h"
-# include "../lib/ultimate_libft/ultimate_libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include <stdlib.h>
-# include <errno.h>
+# include "miniRT.h"
+# define SPHERES_COUNT 3
 
-# include "vec3.h"
-# include "ray.h"
-# include "sphere.h"
-
-#define WIDTH 1900
-#define HEIGHT 1280
+typedef struct s_sphere
+{
+	t_vec3	center;
+	double	radius;
+}	t_sphere;
 
 #endif

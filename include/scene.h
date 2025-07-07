@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 15:41:47 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 16:45:13 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:17:09 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,12 @@ typedef struct s_object
 typedef struct s_scene
 {
 	t_camera	camera;
-	t_light		*lights;		// Array dinámico
+	t_light		*lights;			// Array dinámico
 	int			light_count;
-	t_object	*objects;		// Array dinámico
+	t_object	*objects;			// Array dinámico
 	int			object_count;
-	t_vec3		ambient;		// Luz ambiente
+	double		ambient_ratio;		// 0.2 (ratio)
+	t_vec3		ambient_color;		// (1.0, 1.0, 1.0) color blanco
 } t_scene;
 
 

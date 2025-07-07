@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 16:36:22 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/07 18:17:19 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ t_scene *init_scene(void)
 	scene->object_count = 0;
 	scene->lights = NULL;
 	scene->light_count = 0;
-	scene->ambient = vec3(0.1, 0.1, 0.1);  // Luz ambiente suave
+	scene->ambient_ratio = 0.2;
+	scene->ambient_color = vec3(1.0, 1.0, 1.0);  // Blanco
 	return (scene);
 }
 
@@ -59,5 +60,6 @@ int add_object(t_scene *scene, t_object obj)
 	scene->objects = new_objects;
 	scene->objects[scene->object_count] = obj;
 	scene->object_count++;
+	// printf(scene->object_count);
 	return (0);
 }

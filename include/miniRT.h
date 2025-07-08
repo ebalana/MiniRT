@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 13:51:35 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:08:01 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@
 
 # define SPHERES_COUNT 3
 
-
+double hit_sphere(t_sphere sphere, t_ray ray, double *t);
+double hit_plane(t_plane plane, t_ray ray, double *t);
 
 #endif

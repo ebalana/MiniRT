@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 14:07:27 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:48:30 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,6 @@ static int rgb_to_mlx_color(double r, double g, double b)
 	return (ir << 24) | (ig << 16) | (ib << 8) | 0xFF;
 }
 
-double hit_sphere(t_sphere sphere, t_ray ray, double *t)
-{
-	t_vec3 oc;
-	double a;
-	double b;
-	double c;
-	double discriminant;
-	double t1, t2;
-
-	oc = vec_sub(ray.origin, sphere.center);
-	a = vec_dot(ray.direction, ray.direction);
-	b = 2.0 * vec_dot(oc, ray.direction);
-	c = vec_dot(oc, oc) - (sphere.radius * sphere.radius);
-	discriminant = b * b - 4 * a * c;
-
-	if (discriminant < 0)
-		return (-1.0); // No intersection
-
-	t1 = (-b - sqrt(discriminant)) / (2.0 * a);
-	t2 = (-b + sqrt(discriminant)) / (2.0 * a);
-
-	// Return the closest positive intersection
-	if (t1 > 0.001)
-	{
-		*t = t1;
-		return (t1);
-	}
-	else if (t2 > 0.001)
-	{
-		*t = t2;
-		return (t2);
-	}
-	return (-1.0);
-}
-
-
 t_vec3 ray_color(t_ray ray, t_scene *scene)
 {
 	double t;
@@ -80,6 +44,37 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 				normal = vec_normalize(vec_sub(hit_point, scene->objects[i].data.sphere.center));
 				
 				// Ambient light
+				t_vec3 object_color = scene->objects[i].color;
+				t_vec3 ambient_effect = vec_scale(scene->ambient_color, scene->ambient_ratio);
+				t_vec3 final_color = vec_add(object_color, ambient_effect);
+				
+				// Diffuse light
+				if (scene->light_count > 0)
+				{
+					t_vec3 light_dir = vec_normalize(vec_sub(scene->lights[0].position, hit_point));
+					double light_intensity = fmax(0.0, vec_dot(normal, light_dir));
+					t_vec3 diffuse = vec_scale(scene->lights[0].color, 
+												light_intensity * scene->lights[0].intensity);
+					final_color = vec_add(final_color, diffuse);
+					
+					// Clamp colors
+					final_color.x = fmin(final_color.x, 1.0);
+					final_color.y = fmin(final_color.y, 1.0);
+					final_color.z = fmin(final_color.z, 1.0);
+				}
+				
+				return final_color;
+			}
+		}
+		else if (scene->objects[i].type == PLANE)
+		{
+			if (hit_plane(scene->objects[i].data.plane, ray, &t) >= 0)
+			{
+				// Calcular punto de intersección
+				hit_point = vec_add(ray.origin, vec_scale(ray.direction, t));
+				normal = scene->objects[i].data.plane.normal;  // Normal ya está calculada
+				
+				// Aplicar iluminación (igual que esferas)
 				t_vec3 object_color = scene->objects[i].color;
 				t_vec3 ambient_effect = vec_scale(scene->ambient_color, scene->ambient_ratio);
 				t_vec3 final_color = vec_add(object_color, ambient_effect);
@@ -201,6 +196,18 @@ int main(void)
 
 	t_object green_sphere = create_sphere(vec3(1.5, 0, -5), 0.5, vec3(0.1, 0.8, 0.1));
 	add_object(scene, green_sphere);
+
+	//Crear plano como "suelo" (horizontal)
+	t_object floor_plane = create_plane(vec3(0, -2, 0), vec3(0, 1, 0), vec3(0.5, 0.5, 0.5));
+	add_object(scene, floor_plane);
+
+	//Crear plano como "pared"
+	t_object wall_plane = create_plane(vec3(0, 0, -10), vec3(0, 0, 1), vec3(0.5, 0.5, 0.5));
+	add_object(scene, wall_plane);
+
+	// // Plano inclinado que sí se ve desde la cámara
+	// t_object visible_plane = create_plane(vec3(0, 0, -8), vec3(0, 0.3, 1), vec3(0.5, 0.5, 0.5));
+	// add_object(scene, visible_plane);
 
 	// Crear luz hardcodeada
 	t_light light;

@@ -6,14 +6,14 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/07 18:23:31 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:40:35 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
 // Convert RGB values (0-1) to MLX42 color format
-static uint32_t rgb_to_mlx_color(double r, double g, double b)
+static int rgb_to_mlx_color(double r, double g, double b)
 {
 	int ir = (int)(255.999 * r);
 	int ig = (int)(255.999 * g);
@@ -62,47 +62,61 @@ double hit_sphere(t_sphere sphere, t_ray ray, double *t)
 	return (-1.0);
 }
 
-// Cambiar la función ray_color para usar la escena
+
 t_vec3 ray_color(t_ray ray, t_scene *scene)
 {
 	double t;
-	t_vec3 hit_point;
-	t_vec3 normal;
-	int i;
+	t_vec3 hit_point, normal;
+	int i = 0;
 
-	i = 0;
-	// Buscar intersección con objetos en la escena
 	while (i < scene->object_count)
 	{
 		if (scene->objects[i].type == SPHERE)
 		{
 			if (hit_sphere(scene->objects[i].data.sphere, ray, &t) >= 0)
 			{
-				// Calculate normal at hit point
+				// Calcular punto e intersección y normal
 				hit_point = vec_add(ray.origin, vec_scale(ray.direction, t));
 				normal = vec_normalize(vec_sub(hit_point, scene->objects[i].data.sphere.center));
 				
-				//Ambient Light
+				// Ambient light
 				t_vec3 object_color = scene->objects[i].color;
 				t_vec3 ambient_effect = vec_scale(scene->ambient_color, scene->ambient_ratio);
 				t_vec3 final_color = vec_add(object_color, ambient_effect);
+				
+				// Diffuse light
+				if (scene->light_count > 0)
+				{
+					t_vec3 light_dir = vec_normalize(vec_sub(scene->lights[0].position, hit_point));
+					double light_intensity = fmax(0.0, vec_dot(normal, light_dir));
+					t_vec3 diffuse = vec_scale(scene->lights[0].color, 
+												light_intensity * scene->lights[0].intensity);
+					final_color = vec_add(final_color, diffuse);
+					
+					// Clamp colors
+					final_color.x = fmin(final_color.x, 1.0);
+					final_color.y = fmin(final_color.y, 1.0);
+					final_color.z = fmin(final_color.z, 1.0);
+				}
+				
 				return final_color;
 			}
 		}
-		i++;  // Incrementar contador
+		i++;	// Pasar al siguiente objeto
 	}
-	return vec3(0.0, 0.0, 0.0);
+	// Si no hay intersección con ningún objeto, devolver fondo negro
+	return vec3(0.0, 0.0, 0.0);  // Fondo negro
 }
 
-// Modificar render_scene para recibir la escena
 static void render_scene(mlx_image_t *img, t_scene *scene)
 {
-	// Camera setup (mismo código que tienes)
+	// Camera setup
 	double aspect_ratio = (double)WIDTH / HEIGHT;
 	double viewport_height = 2.0;
 	double viewport_width = aspect_ratio * viewport_height;
 	double focal_length = 1.0;
 
+	// Definir el espacio de la cámara
 	t_vec3 origin = scene->camera.position;  // Usar la cámara de la escena
 	t_vec3 horizontal = vec3(viewport_width, 0, 0);
 	t_vec3 vertical = vec3(0, viewport_height, 0);
@@ -110,28 +124,35 @@ static void render_scene(mlx_image_t *img, t_scene *scene)
 		vec_scale(horizontal, 0.5)), vec_scale(vertical, 0.5)), 
 		vec3(0, 0, focal_length));
 
-	// Render each pixel (mismo bucle)
-	for (int j = HEIGHT - 1; j >= 0; j--)
+	// Render each pixel
+	int j = HEIGHT - 1;
+	while (j >= 0) // Cada fila
 	{
-		for (int i = 0; i < WIDTH; i++)
+		int i = 0;
+		while (i < WIDTH) // Cada columna
 		{
+			// Calcular coordenadas normalizadas (0-1)
 			double u = (double)i / (WIDTH - 1);
 			double v = (double)j / (HEIGHT - 1);
-			
+
+			// Calcular dirección del rayo desde cámara hacia el píxel
 			t_vec3 direction = vec_add(vec_add(lower_left_corner, 
 				vec_scale(horizontal, u)), vec_scale(vertical, v));
 			direction = vec_sub(direction, origin);
 			
+			// Crear rayo desde cámara hacia el píxel
 			t_ray ray;
 			ray.origin = origin;
 			ray.direction = direction;
 			
-			// Llamar a ray_color con la escena
+			// Obtener color final y convertir a formato MLX
 			t_vec3 color = ray_color(ray, scene);
-			uint32_t mlx_color = rgb_to_mlx_color(color.x, color.y, color.z);
-			
+			int mlx_color = rgb_to_mlx_color(color.x, color.y, color.z);			
 			mlx_put_pixel(img, i, HEIGHT - 1 - j, mlx_color);
+			
+			i++;
 		}
+		j--;
 	}
 }
 
@@ -171,6 +192,19 @@ int main(void)
 	t_object red_sphere = create_sphere(vec3(0, 0, -1), 0.5, vec3(0.1, 0.0, 0.0));
 	add_object(scene, red_sphere);
 
+	// Crear luz hardcodeada
+	t_light light;
+	light.position = vec3(-40.0, 50.0, 0.0);
+	light.color = vec3(1.0, 1.0, 1.0);  // Blanco para mandatory
+	light.intensity = 0.6;
+
+	// Añadir luz a la escena
+	scene->lights = malloc(sizeof(t_light));
+	if (!scene->lights)
+		ft_error();
+    scene->lights[0] = light;
+    scene->light_count = 1;
+
 	// Resto del código MLX (igual que tienes)
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT - Ray Tracing", true);
 	if (!mlx)
@@ -194,6 +228,7 @@ int main(void)
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
 	// Liberar memoria de la escena
+	free(scene->lights);
 	free(scene->objects);
 	free(scene);
 	return (EXIT_SUCCESS);

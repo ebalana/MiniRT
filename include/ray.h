@@ -1,36 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 16:44:12 by ebalana-         ###   ########.fr       */
+/*   Created: 2025/07/03 14:05:43 by ebalana-          #+#    #+#             */
+/*   Updated: 2025/07/03 14:06:45 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#ifndef RAY_H
+# define RAY_H
 
-# include "../lib/MLX42/include/MLX42/MLX42.h"
-# include "../lib/ultimate_libft/ultimate_libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include <stdlib.h>
-# include <errno.h>
+#include "miniRT.h"
 
-# include "vec3.h"
-# include "ray.h"
-# include "scene.h"
+typedef struct s_ray
+{
+	t_vec3	origin;
+	t_vec3	direction;
+}	t_ray;
 
-#define WIDTH 1900
-#define HEIGHT 1280
+//Constructor
+t_ray	ray(t_vec3 origin, t_vec3 direction);
 
-# define SPHERES_COUNT 3
-
-
+// Evaluar punto a lo largo del rayo
+t_vec3	ray_at(t_ray r, double t);
 
 #endif

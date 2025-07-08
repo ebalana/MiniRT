@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   miniRT.h                                           :+:      :+:    :+:   */
+/*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 16:44:12 by ebalana-         ###   ########.fr       */
+/*   Created: 2025/07/03 14:07:20 by ebalana-          #+#    #+#             */
+/*   Updated: 2025/07/03 14:07:33 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "../include/miniRT.h"
 
-# include "../lib/MLX42/include/MLX42/MLX42.h"
-# include "../lib/ultimate_libft/ultimate_libft.h"
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <math.h>
-# include <stdlib.h>
-# include <errno.h>
+t_ray	ray(t_vec3 origin, t_vec3 direction)
+{
+	t_ray	r;
 
-# include "vec3.h"
-# include "ray.h"
-# include "scene.h"
+	r.origin = origin;
+	r.direction = direction;
+	return (r);
+}
 
-#define WIDTH 1900
-#define HEIGHT 1280
-
-# define SPHERES_COUNT 3
-
-
-
-#endif
+//Evalúa el punto a lo largo del rayo según la fórmula: P(t) = origin + t * direction
+t_vec3	ray_at(t_ray r, double t)
+{
+	return	(vec_add(r.origin, vec_scale(r.direction, t)));
+}

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:05:01 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 14:05:03 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:57:24 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ t_vec3	vec_cross(t_vec3 a, t_vec3 b)
 	));
 }
 
-double	vec_lenght(t_vec3 v)
+double	vec_length(t_vec3 v)
 {
 	return (sqrt(vec_dot(v, v)));
 }
 
 t_vec3	vec_normalize(t_vec3 v)
 {
-	return (vec_div(v, vec_lenght(v)));
+	return (vec_div(v, vec_length(v)));
 }

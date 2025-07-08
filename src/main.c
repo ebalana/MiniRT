@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 15:48:30 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 16:15:51 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,36 +35,36 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 
 	while (i < scene->object_count)
 	{
-		if (scene->objects[i].type == SPHERE)
+		if (hit_sphere(scene->objects[i].data.sphere, ray, &t) >= 0)
 		{
-			if (hit_sphere(scene->objects[i].data.sphere, ray, &t) >= 0)
+			// Calcular punto e intersección y normal
+			hit_point = vec_add(ray.origin, vec_scale(ray.direction, t));
+			normal = vec_normalize(vec_sub(hit_point, scene->objects[i].data.sphere.center));
+			
+			// Ambient light
+			t_vec3 object_color = scene->objects[i].color;
+			t_vec3 ambient_effect = vec_scale(scene->ambient_color, scene->ambient_ratio);
+			t_vec3 final_color = vec_add(object_color, ambient_effect);
+			
+			// Diffuse light
+			if (scene->light_count > 0)
 			{
-				// Calcular punto e intersección y normal
-				hit_point = vec_add(ray.origin, vec_scale(ray.direction, t));
-				normal = vec_normalize(vec_sub(hit_point, scene->objects[i].data.sphere.center));
+				t_vec3 light_dir = vec_normalize(vec_sub(scene->lights[0].position, hit_point));
+				double light_intensity = fmax(0.0, vec_dot(normal, light_dir));
+				t_vec3 diffuse = vec_scale(scene->lights[0].color, 
+											light_intensity * scene->lights[0].intensity);
 				
-				// Ambient light
-				t_vec3 object_color = scene->objects[i].color;
-				t_vec3 ambient_effect = vec_scale(scene->ambient_color, scene->ambient_ratio);
-				t_vec3 final_color = vec_add(object_color, ambient_effect);
+				// Aplicar sombras suaves también a las esferas
+				if (is_in_shadow(scene, hit_point, scene->lights[0]))
+					diffuse = vec_scale(diffuse, 0.3); // Solo 30% de luz en sombra				
+				final_color = vec_add(final_color, diffuse);
 				
-				// Diffuse light
-				if (scene->light_count > 0)
-				{
-					t_vec3 light_dir = vec_normalize(vec_sub(scene->lights[0].position, hit_point));
-					double light_intensity = fmax(0.0, vec_dot(normal, light_dir));
-					t_vec3 diffuse = vec_scale(scene->lights[0].color, 
-												light_intensity * scene->lights[0].intensity);
-					final_color = vec_add(final_color, diffuse);
-					
-					// Clamp colors
-					final_color.x = fmin(final_color.x, 1.0);
-					final_color.y = fmin(final_color.y, 1.0);
-					final_color.z = fmin(final_color.z, 1.0);
-				}
-				
-				return final_color;
-			}
+				// Clamp colors
+				final_color.x = fmin(final_color.x, 1.0);
+				final_color.y = fmin(final_color.y, 1.0);
+				final_color.z = fmin(final_color.z, 1.0);
+			}			
+			return final_color;
 		}
 		else if (scene->objects[i].type == PLANE)
 		{
@@ -81,19 +81,22 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 				
 				// Diffuse light
 				if (scene->light_count > 0)
-				{
+                {
 					t_vec3 light_dir = vec_normalize(vec_sub(scene->lights[0].position, hit_point));
 					double light_intensity = fmax(0.0, vec_dot(normal, light_dir));
 					t_vec3 diffuse = vec_scale(scene->lights[0].color, 
-												light_intensity * scene->lights[0].intensity);
+						light_intensity * scene->lights[0].intensity);
+				
+					// Shadows to plane
+					if (is_in_shadow(scene, hit_point, scene->lights[0]))
+						diffuse = vec_scale(diffuse, 0.3);
 					final_color = vec_add(final_color, diffuse);
 					
 					// Clamp colors
 					final_color.x = fmin(final_color.x, 1.0);
 					final_color.y = fmin(final_color.y, 1.0);
 					final_color.z = fmin(final_color.z, 1.0);
-				}
-				
+                }				
 				return final_color;
 			}
 		}
@@ -211,7 +214,8 @@ int main(void)
 
 	// Crear luz hardcodeada
 	t_light light;
-	light.position = vec3(-40.0, 50.0, 0.0);
+	light.position = vec3(0.0, 50.0, 0.0);
+	//light.position = vec3(-40.0, 50.0, 0.0); // Luz arriba - izquierda
 	light.color = vec3(1.0, 1.0, 1.0);  // Blanco para mandatory
 	light.intensity = 0.6;
 

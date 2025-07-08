@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/08 15:01:26 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 15:19:14 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:57:35 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,42 @@ double hit_plane(t_plane plane, t_ray ray, double *t)
 		return (*t);
 
 	return (-1.0);
+}
+
+// Función para verificar si un punto está en sombra
+int is_in_shadow(t_scene *scene, t_vec3 point, t_light light)
+{
+	// Crear rayo desde el punto hacia la luz
+	t_vec3 light_dir = vec_sub(light.position, point);
+	double light_distance = vec_length(light_dir);
+	light_dir = vec_normalize(light_dir);
+
+	// Crear rayo de sombra (ligeramente elevado para evitar auto-intersección)
+	t_ray shadow_ray;
+	shadow_ray.origin = vec_add(point, vec_scale(light_dir, 0.001));
+	shadow_ray.direction = light_dir;
+
+	double t;
+	// Verificar intersección con todos los objetos
+	for (int i = 0; i < scene->object_count; i++)
+	{
+		if (scene->objects[i].type == SPHERE)
+		{
+			if (hit_sphere(scene->objects[i].data.sphere, shadow_ray, &t) >= 0)
+			{
+				// Si la intersección está entre el punto y la luz, hay sombra
+				if (t < light_distance)
+					return 1;
+			}
+		}
+		else if (scene->objects[i].type == PLANE)
+		{
+			if (hit_plane(scene->objects[i].data.plane, shadow_ray, &t) >= 0)
+			{
+				if (t < light_distance)
+					return 1;
+			}
+		}
+	}
+	return 0;
 }

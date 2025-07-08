@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 13:40:35 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 14:07:27 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ static void render_scene(mlx_image_t *img, t_scene *scene)
 {
 	// Camera setup
 	double aspect_ratio = (double)WIDTH / HEIGHT;
-	double viewport_height = 2.0;
+	double viewport_height = 1.0;
 	double viewport_width = aspect_ratio * viewport_height;
 	double focal_length = 1.0;
 
@@ -183,14 +183,24 @@ int main(void)
 		return (EXIT_FAILURE);
 	}
 
-	// Configurar cámara
+	// Configurar cámara hardcodeada
 	scene->camera.position = vec3(0, 0, 0);
 	scene->camera.direction = vec3(0, 0, -1);
 	scene->camera.fov = 90.0;
 
-	// Crear esfera hardcodeada (roja)
-	t_object red_sphere = create_sphere(vec3(0, 0, -1), 0.5, vec3(0.1, 0.0, 0.0));
+	// // Crear esfera hardcodeada (roja)
+	// t_object red_sphere = create_sphere(vec3(0, 0, -1), 0.5, vec3(0.1, 0.0, 0.0));
+	// add_object(scene, red_sphere);
+
+	// Crear 3 esferas de colores
+	t_object red_sphere = create_sphere(vec3(-1.5, 0, -5), 0.5, vec3(0.8, 0.1, 0.1));
 	add_object(scene, red_sphere);
+
+	t_object blue_sphere = create_sphere(vec3(0, 0, -5), 0.5, vec3(0.1, 0.1, 0.8));
+	add_object(scene, blue_sphere);
+
+	t_object green_sphere = create_sphere(vec3(1.5, 0, -5), 0.5, vec3(0.1, 0.8, 0.1));
+	add_object(scene, green_sphere);
 
 	// Crear luz hardcodeada
 	t_light light;

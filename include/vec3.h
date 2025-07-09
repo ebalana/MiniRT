@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:06:20 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 14:06:59 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:57:32 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ double	vec_dot(t_vec3 a,t_vec3 b);
 t_vec3	vec_cross(t_vec3 a, t_vec3 b);
 
 // Magnitud y normalización
-double	vec_lenght(t_vec3 v);
+double	vec_length(t_vec3 v);
 t_vec3	vec_normalize(t_vec3 v);
 
 #endif

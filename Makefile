@@ -26,6 +26,9 @@ SRCS = 	src/main.c \
 		src/ray.c \
 		src/vec3.c \
 		src/scene.c \
+		src/hit_object.c \
+		src/shadow.c \
+		src/init_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 

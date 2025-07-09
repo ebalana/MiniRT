@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 13:40:06 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/08 13:46:32 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ int add_object(t_scene *scene, t_object obj)
 	scene->objects = new_objects;
 	scene->objects[scene->object_count] = obj;
 	scene->object_count++;
-	// printf(scene->object_count);
+	printf("Objects count: %d\n", scene->object_count);
 	return (0);
 }

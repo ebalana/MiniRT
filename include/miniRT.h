@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 15:56:26 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/09 14:21:07 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,21 @@
 #define WIDTH 1900
 #define HEIGHT 1280
 
-# define SPHERES_COUNT 3
+// init_utils.c
+mlx_t		*init_mlx(void);
+mlx_image_t	*create_image(mlx_t *mlx);
+void		display_image(mlx_t *mlx, mlx_image_t *img);
+void		free_scene(t_scene *scene);
 
-double hit_sphere(t_sphere sphere, t_ray ray, double *t);
-double hit_plane(t_plane plane, t_ray ray, double *t);
-int is_in_shadow(t_scene *scene, t_vec3 point, t_light light);
+// hit_object.c
+double		hit_sphere(t_sphere sphere, t_ray ray, double *t);
+double		hit_plane(t_plane plane, t_ray ray, double *t);
+
+// shadow.c
+int			check_shadow(t_object object, t_ray shadow_ray, double light_distance);
+int			is_shadow(t_scene *scene, t_vec3 point, t_light light);
+
+// error.c
+void		ft_error(void);
 
 #endif

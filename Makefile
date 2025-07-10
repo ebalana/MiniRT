@@ -29,6 +29,8 @@ SRCS = 	src/main.c \
 		src/hit_object.c \
 		src/shadow.c \
 		src/init_utils.c \
+		src/error.c \
+		src/hooks.c \
 
 OBJS = $(SRCS:.c=.o)
 

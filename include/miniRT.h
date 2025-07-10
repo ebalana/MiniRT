@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/09 14:21:07 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/10 15:00:23 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ void		free_scene(t_scene *scene);
 double		hit_sphere(t_sphere sphere, t_ray ray, double *t);
 double		hit_plane(t_plane plane, t_ray ray, double *t);
 
+// hooks.c
+void		key_hook(mlx_key_data_t keydata, void *param);
+
 // shadow.c
 int			check_shadow(t_object object, t_ray shadow_ray, double light_distance);
-int			is_shadow(t_scene *scene, t_vec3 point, t_light light);
+int			is_shadow(t_scene *scene, t_vec3 point, t_light light, t_vec3 surface_normal);
 
 // error.c
 void		ft_error(void);

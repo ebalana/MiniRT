@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 15:41:47 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/10 16:46:29 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:21:13 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,12 @@ typedef struct s_scene
 	double		ambient_ratio;		// 0.2 (ratio)
 	t_vec3		ambient_color;		// (1.0, 1.0, 1.0) color blanco
 } t_scene;
+
+typedef struct s_render_data
+{
+    mlx_image_t *img;
+    t_scene *scene;
+} t_render_data;
 
 
 t_object create_sphere(t_vec3 center, double radius, t_vec3 color);

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/21 15:59:18 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/21 16:50:10 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,51 +132,71 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 	return final_color;
 }
 
-static void render_scene(mlx_image_t *img, t_scene *scene)
+static int current_row = 0;
+static int rendering_complete = 0;
+
+static void render_scene(void *param)
 {
+	t_render_data *data = (t_render_data *)param;
+	
+	if (rendering_complete)
+		return;
+	
+	// Renderizar solo unas pocas filas por frame
+	int rows_per_frame = 5;
+	int end_row = current_row + rows_per_frame;
+	if (end_row > HEIGHT)
+		end_row = HEIGHT;
+	
 	// Camera setup
 	double aspect_ratio = (double)WIDTH / HEIGHT;
 	double viewport_height = 1.0;
 	double viewport_width = aspect_ratio * viewport_height;
 	double focal_length = 1.0;
-
-	// Definir el espacio de la cámara
-	t_vec3 origin = scene->camera.position;  // Usar la cámara de la escena
+	
+	t_vec3 origin = data->scene->camera.position;
 	t_vec3 horizontal = vec3(viewport_width, 0, 0);
 	t_vec3 vertical = vec3(0, viewport_height, 0);
 	t_vec3 lower_left_corner = vec_sub(vec_sub(vec_sub(origin,
 		vec_scale(horizontal, 0.5)), vec_scale(vertical, 0.5)), 
 		vec3(0, 0, focal_length));
-
-	// Render each pixel
-	int j = HEIGHT - 1;
-	while (j >= 0) // Cada fila
+	
+	// Renderizar las filas asignadas
+	int j = HEIGHT - 1 - current_row;
+	while (j >= HEIGHT - end_row)
 	{
 		int i = 0;
-		while (i < WIDTH) // Cada columna
+		while (i < WIDTH)
 		{
-			// Calcular coordenadas normalizadas (0-1)
 			double u = (double)i / (WIDTH - 1);
 			double v = (double)j / (HEIGHT - 1);
-
-			// Calcular dirección del rayo desde cámara hacia el píxel
+			
 			t_vec3 direction = vec_add(vec_add(lower_left_corner, 
 				vec_scale(horizontal, u)), vec_scale(vertical, v));
 			direction = vec_sub(direction, origin);
 			
-			// Crear rayo desde cámara hacia el píxel
 			t_ray ray;
 			ray.origin = origin;
 			ray.direction = direction;
 			
-			// Obtener color final y convertir a formato MLX
-			t_vec3 color = ray_color(ray, scene);
+			t_vec3 color = ray_color(ray, data->scene);
 			int mlx_color = rgb_to_mlx_color(color.x, color.y, color.z);			
-			mlx_put_pixel(img, i, HEIGHT - 1 - j, mlx_color);
+			mlx_put_pixel(data->img, i, HEIGHT - 1 - j, mlx_color);
 			
 			i++;
 		}
 		j--;
+	}
+    
+	current_row = end_row;
+	
+	// Mostrar progreso
+	if (current_row % 20 == 0)
+		printf("Rendering... %d%%\n", (current_row * 100) / HEIGHT);    
+	if (current_row >= HEIGHT)
+	{
+		rendering_complete = 1;
+		printf("Rendering complete!\n");
 	}
 }
 
@@ -186,6 +206,7 @@ int main(void)
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 	t_scene		*scene;
+	t_render_data render_data;
 
 	// Crear la escena
 	scene = init_scene();
@@ -239,12 +260,20 @@ int main(void)
 
 	mlx = init_mlx();
 	img = create_image(mlx);
-
-	printf("Rendering scene...\n");
-	render_scene(img, scene);
-	printf("Rendering complete!\n");
-
+	
+	// Configurar datos de renderizado
+	render_data.img = img;
+	render_data.scene = scene;
+	
+	// Resetear variables globales
+	current_row = 0;
+	rendering_complete = 0;
+	
 	display_image(mlx, img);
+	printf("Starting progressive render...\n");
+	
+	// Usar loop hook para renderizado progresivo
+	mlx_loop_hook(mlx, render_scene, &render_data);
 	mlx_key_hook(mlx, key_hook, mlx);
 	mlx_loop(mlx);
 	

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/08 13:46:32 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/21 12:47:57 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,19 @@ t_object create_plane(t_vec3 point, t_vec3 normal, t_vec3 color)
 	return (obj);
 }
 
+t_object create_cylinder(t_vec3 center, t_vec3 axis, double radius, double height, t_vec3 color)
+{
+	t_object obj;
+	obj.type = CYLINDER;
+	obj.color = color;
+	obj.data.cylinder.center = center;
+	obj.data.cylinder.axis = vec_normalize(axis);
+	obj.data.cylinder.radius = radius;
+	obj.data.cylinder.height = height;
+	obj.data.cylinder.color = color;
+	return (obj);
+}
+
 // Inicializar escena
 t_scene *init_scene(void)
 {
@@ -46,7 +59,7 @@ t_scene *init_scene(void)
 	scene->lights = NULL;
 	scene->light_count = 0;
 	scene->ambient_ratio = 0.2;
-	scene->ambient_color = vec3(1.0, 1.0, 1.0);  // Blanco
+	scene->ambient_color = vec3(1.0, 1.0, 1.0);
 	return (scene);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/10 16:16:43 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:59:18 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,17 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 				}
 			}
 		}
+		else if (scene->objects[i].type == CYLINDER)
+		{
+			if (hit_cylinder(scene->objects[i].data.cylinder, ray, &t) >= 0)
+			{
+				if (closest_t < 0 || t < closest_t)
+				{
+					closest_t = t;
+					closest_object = i;
+				}
+			}
+		}
 	}
 	
 	// If no intersection found, return background
@@ -75,6 +86,25 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 	else if (scene->objects[closest_object].type == PLANE)
 	{
 		normal = scene->objects[closest_object].data.plane.normal;
+	}
+	else if (scene->objects[closest_object].type == CYLINDER)
+	{
+		t_cylinder cyl = scene->objects[closest_object].data.cylinder;
+		t_vec3 to_hit = vec_sub(hit_point, cyl.center);
+		double projection = vec_dot(to_hit, cyl.axis);
+		double height_limit = cyl.height / 2.0;
+		
+		// Verificar si estamos en una base
+		if (fabs(projection - height_limit) < 0.001)
+			normal = cyl.axis;  // Base superior
+		else if (fabs(projection + height_limit) < 0.001)
+			normal = vec_scale(cyl.axis, -1.0);  // Base inferior
+		else
+		{
+			// Superficie lateral
+			t_vec3 closest_point_on_axis = vec_add(cyl.center, vec_scale(cyl.axis, projection));
+			normal = vec_normalize(vec_sub(hit_point, closest_point_on_axis));
+		}
 	}
 	
 	// Apply lighting
@@ -172,36 +202,26 @@ int main(void)
 	scene->camera.direction = vec3(0, 0, -1);
 	scene->camera.fov = 90.0;
 
-	//Crear 3 esferas de colores
-	t_object red_sphere = create_sphere(vec3(-1.5, -1, -5), 0.5, vec3(0.8, 0.1, 0.1));
-	add_object(scene, red_sphere);
-
-	t_object blue_sphere = create_sphere(vec3(0, 0, -5), 0.5, vec3(0.1, 0.1, 0.8));
-	add_object(scene, blue_sphere);
-
-	t_object green_sphere = create_sphere(vec3(1.5, 1, -5), 0.5, vec3(0.1, 0.8, 0.1));
-	add_object(scene, green_sphere);
-
 	//Crear plano como "suelo" (horizontal)
 	t_object floor_plane = create_plane(vec3(0, -2, 0), vec3(0, 1, 0), vec3(0.5, 0.5, 0.5));
 	add_object(scene, floor_plane);
 
-	//Crear plano como "pared" (fondo)
-	t_object wall_plane = create_plane(vec3(0, 0, -10), vec3(0, 0, 1), vec3(0.5, 0.5, 0.5));
-	add_object(scene, wall_plane);
+	// Crear esfera izquierda
+	t_object huevo_izquierdo = create_sphere(vec3(-0.2, -0.2, -5), 0.2,  vec3(0.5, 0.1, 0.8));
+	add_object(scene, huevo_izquierdo);
 
-	// Crear plano vertical al lado de la esfera roja
-	t_object side_wall = create_plane(vec3(-2, 0, 0), vec3(1, 0, 0), vec3(0.1, 0.1, 0.8));
-	add_object(scene, side_wall);
+	// Crear cilindro morado
+	t_object bebe_arnau = create_cylinder(vec3(0, 0, -5), vec3(0, 1, 0), 0.2, 0.5, vec3(0.5, 0.1, 0.8));
+	add_object(scene, bebe_arnau);
+	
+	// Crear esfera encima cilindro
+	t_object puntita_arnau = create_sphere(vec3(0, 0.2, -5), 0.2, vec3(0.5, 0.1, 0.8));
+	add_object(scene, puntita_arnau);
 
-	// Crear plano vertical al lado de la esfera verde
-	t_object side_wall2 = create_plane(vec3(2, 0, 0), vec3(-1, 0, 0), vec3(0.8, 0.1, 0.1));
-	add_object(scene, side_wall2);
-
-	// Crear techo blanco
-	t_object ceiling = create_plane(vec3(0, 3, 0), vec3(0, -1, 0), vec3(0.5, 0.5, 0.5));
-	add_object(scene, ceiling);
-
+	// Crear esfera derecha
+	t_object huevo_derecho = create_sphere(vec3(0.2, -0.2, -5), 0.2,  vec3(0.5, 0.1, 0.8));
+	add_object(scene, huevo_derecho);
+	
 	// Crear luz hardcodeada
 	t_light light;
 	light.position = vec3(0.0, 2.5, -5.0);

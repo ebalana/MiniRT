@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 14:08:03 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/09 14:20:30 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/21 15:56:28 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ mlx_t *init_mlx(void)
 {
 	mlx_t *mlx;
 
-	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+	mlx = mlx_init(WIDTH, HEIGHT, "tita_arnau", true);
 	if (!mlx)
 		ft_error();
 	return (mlx);

@@ -28,6 +28,8 @@ SRCS = 	src/error.c \
 		src/init_utils.c \
 		src/main.c \
 		src/ray.c \
+		src/render_utils.c \
+		src/render.c \
 		src/scene.c \
 		src/shadow.c \
 		src/vec_utils.c \

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 15:41:47 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/21 16:21:13 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:36:41 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,9 +90,29 @@ typedef struct s_scene
 
 typedef struct s_render_data
 {
-    mlx_image_t *img;
-    t_scene *scene;
+	mlx_image_t	*img;
+	t_scene		*scene;
+	int			current_row;
+	int			rendering_complete;
 } t_render_data;
+
+// Para get_camera_vectors - crear estructura de viewport
+typedef struct	s_viewport
+{
+	t_vec3	origin;
+	t_vec3	horizontal;
+	t_vec3	vertical;
+	t_vec3	lower_left_corner;
+} t_viewport;
+
+// Para render_rows - usar estructura de píxel:
+typedef struct	s_pixel
+{
+	int		i;
+	int		j;
+	double	u;
+	double	v;
+} t_pixel;
 
 
 t_object create_sphere(t_vec3 center, double radius, t_vec3 color);

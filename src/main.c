@@ -6,14 +6,14 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/22 12:56:27 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:12:04 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
 // Convert RGB values (0-1) to MLX42 color format
-static int rgb_to_mlx_color(double r, double g, double b)
+int rgb_to_mlx_color(double r, double g, double b)
 {
 	int ir = (int)(255.999 * r);
 	int ig = (int)(255.999 * g);
@@ -132,74 +132,6 @@ t_vec3 ray_color(t_ray ray, t_scene *scene)
 	return final_color;
 }
 
-static int current_row = 0;
-static int rendering_complete = 0;
-
-static void render_scene(void *param)
-{
-	t_render_data *data = (t_render_data *)param;
-	
-	if (rendering_complete)
-		return;
-	
-	// Renderizar solo unas pocas filas por frame
-	int rows_per_frame = 5;
-	int end_row = current_row + rows_per_frame;
-	if (end_row > HEIGHT)
-		end_row = HEIGHT;
-	
-	// Camera setup
-	double aspect_ratio = (double)WIDTH / HEIGHT;
-	double viewport_height = 1.0;
-	double viewport_width = aspect_ratio * viewport_height;
-	double focal_length = 1.0;
-	
-	t_vec3 origin = data->scene->camera.position;
-	t_vec3 horizontal = vec3(viewport_width, 0, 0);
-	t_vec3 vertical = vec3(0, viewport_height, 0);
-	t_vec3 lower_left_corner = vec_sub(vec_sub(vec_sub(origin,
-		vec_scale(horizontal, 0.5)), vec_scale(vertical, 0.5)), 
-		vec3(0, 0, focal_length));
-	
-	// Renderizar las filas asignadas
-	int j = HEIGHT - 1 - current_row;
-	while (j >= HEIGHT - end_row)
-	{
-		int i = 0;
-		while (i < WIDTH)
-		{
-			double u = (double)i / (WIDTH - 1);
-			double v = (double)j / (HEIGHT - 1);
-			
-			t_vec3 direction = vec_add(vec_add(lower_left_corner, 
-				vec_scale(horizontal, u)), vec_scale(vertical, v));
-			direction = vec_sub(direction, origin);
-			
-			t_ray ray;
-			ray.origin = origin;
-			ray.direction = direction;
-			
-			t_vec3 color = ray_color(ray, data->scene);
-			int mlx_color = rgb_to_mlx_color(color.x, color.y, color.z);			
-			mlx_put_pixel(data->img, i, HEIGHT - 1 - j, mlx_color);
-			
-			i++;
-		}
-		j--;
-	}
-    
-	current_row = end_row;
-	
-	// Mostrar progreso
-	if (current_row % 20 == 0)
-		printf("Rendering... %d%%\n", (current_row * 100) / HEIGHT);    
-	if (current_row >= HEIGHT)
-	{
-		rendering_complete = 1;
-		printf("Rendering complete!\n");
-	}
-}
-
 // En tu main(), crear la escena hardcodeada:
 int main(void)
 {
@@ -259,16 +191,8 @@ int main(void)
 	/*----------------------------------------------------------------------------*/
 
 	mlx = init_mlx();
-	img = create_image(mlx);
-	
-	// Configurar datos de renderizado
-	render_data.img = img;
-	render_data.scene = scene;
-	
-	// Resetear variables globales
-	current_row = 0;
-	rendering_complete = 0;
-	
+	img = create_image(mlx);	
+	init_render_data(&render_data, img, scene);
 	display_image(mlx, img);
 	printf("Starting progressive render...\n");
 	

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 14:08:03 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/22 13:50:30 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/22 14:16:29 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,15 @@ mlx_image_t	*create_image(mlx_t *mlx)
 		ft_error();
 	}
 	return (img);
+}
+
+// Función para inicializar datos de renderizado
+void	init_render_data(t_render_data *red, mlx_image_t *img, t_scene *scene)
+{
+	red->img = img;
+	red->scene = scene;
+	red->current_row = 0;
+	red->rendering_complete = 0;
 }
 
 // Mostrar imagen en ventana

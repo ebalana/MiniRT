@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/21 16:50:10 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/22 12:56:27 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ int main(void)
 	add_object(scene, bebe_arnau);
 	
 	// Crear esfera encima cilindro
-	t_object puntita_arnau = create_sphere(vec3(0, 0.2, -5), 0.2, vec3(0.5, 0.1, 0.8));
+	t_object puntita_arnau = create_sphere(vec3(0, 0.255, -5), 0.2, vec3(0.5, 0.1, 0.8));
 	add_object(scene, puntita_arnau);
 
 	// Crear esfera derecha

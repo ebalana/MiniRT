@@ -22,15 +22,16 @@ MLX_LIB = $(MLX_DIR)/build/libmlx42.a
 MLX_INCLUDE = -I$(MLX_DIR)/include
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
-SRCS = 	src/main.c \
-		src/ray.c \
-		src/vec3.c \
-		src/scene.c \
+SRCS = 	src/error.c \
 		src/hit_object.c \
-		src/shadow.c \
-		src/init_utils.c \
-		src/error.c \
 		src/hooks.c \
+		src/init_utils.c \
+		src/main.c \
+		src/ray.c \
+		src/scene.c \
+		src/shadow.c \
+		src/vec_utils.c \
+		src/vec_utils2.c \
 
 OBJS = $(SRCS:.c=.o)
 

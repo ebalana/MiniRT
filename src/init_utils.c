@@ -6,16 +6,16 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 14:08:03 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/21 16:13:57 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/22 13:50:30 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
 // Inicializar MLX
-mlx_t *init_mlx(void)
+mlx_t	*init_mlx(void)
 {
-	mlx_t *mlx;
+	mlx_t	*mlx;
 
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
@@ -24,9 +24,9 @@ mlx_t *init_mlx(void)
 }
 
 // Crear imagen MLX
-mlx_image_t *create_image(mlx_t *mlx)
+mlx_image_t	*create_image(mlx_t *mlx)
 {
-	mlx_image_t *img;
+	mlx_image_t	*img;
 
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img)
@@ -38,7 +38,7 @@ mlx_image_t *create_image(mlx_t *mlx)
 }
 
 // Mostrar imagen en ventana
-void display_image(mlx_t *mlx, mlx_image_t *img)
+void	display_image(mlx_t *mlx, mlx_image_t *img)
 {
 	if (mlx_image_to_window(mlx, img, 0, 0) == -1)
 	{
@@ -48,7 +48,7 @@ void display_image(mlx_t *mlx, mlx_image_t *img)
 }
 
 // Liberar memoria de la escena
-void free_scene(t_scene *scene)
+void	free_scene(t_scene *scene)
 {
 	if (scene)
 	{

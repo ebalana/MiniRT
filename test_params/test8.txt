@@ -37,7 +37,7 @@ add_object(scene, ceiling);
 t_light light;
 light.position = vec3(0.0, 2.5, -5.0);
 light.color = vec3(1.0, 1.0, 1.0);  // Blanco para mandatory
-light.intensity = 0.6;
+light.intensity = 0.2;
 
 // Añadir luz a la escena
 scene->lights = malloc(sizeof(t_light));

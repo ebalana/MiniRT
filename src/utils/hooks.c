@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.c                                              :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/03 14:07:20 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/03 14:07:33 by ebalana-         ###   ########.fr       */
+/*   Created: 2025/07/09 16:18:09 by ebalana-          #+#    #+#             */
+/*   Updated: 2025/07/22 13:51:05 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-t_ray	ray(t_vec3 origin, t_vec3 direction)
+void	key_hook(mlx_key_data_t keydata, void *param)
 {
-	t_ray	r;
+	mlx_t	*mlx;
 
-	r.origin = origin;
-	r.direction = direction;
-	return (r);
-}
-
-//Evalúa el punto a lo largo del rayo según la fórmula: P(t) = origin + t * direction
-t_vec3	ray_at(t_ray r, double t)
-{
-	return	(vec_add(r.origin, vec_scale(r.direction, t)));
+	mlx = param;
+	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
+		mlx_close_window(mlx);
 }

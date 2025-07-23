@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/10 16:44:48 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:44:58 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,13 @@
 #define WIDTH 1900
 #define HEIGHT 1280
 
+// main.c
+int			rgb_to_mlx_color(double r, double g, double b);
+
 // init_utils.c
 mlx_t		*init_mlx(void);
 mlx_image_t	*create_image(mlx_t *mlx);
+void		init_render_data(t_render_data *red, mlx_image_t *img, t_scene *scene);
 void		display_image(mlx_t *mlx, mlx_image_t *img);
 void		free_scene(t_scene *scene);
 
@@ -49,5 +53,25 @@ int			is_shadow(t_scene *scene, t_vec3 point, t_light light, t_vec3 surface_norm
 
 // error.c
 void		ft_error(void);
+
+// render.c
+int			rgb_to_mlx_color(double r, double g, double b);
+void		render_pixel(t_render_data *data, t_pixel *pixel, t_viewport *viewport);
+void		render_rows(t_render_data *data, int start_row, int end_row, t_viewport *viewport);
+void		render_scene(void *param);
+
+//render_utils.c
+void		update_render_progress(t_render_data *data, int end_row);
+void		get_render_rows(int row, int rowsxframe, int *start_row, int *end_row);
+void		get_camera_vectors(t_camera *camera, double aspect_ratio, t_viewport *viewport);
+
+// ray_tracer.c
+t_vec3		ray_color(t_ray ray, t_scene *scene);
+
+// lighting.c
+t_vec3		clamp_color(t_vec3 color);
+t_vec3		calculate_diffuse_lighting(t_scene *scene, t_vec3 hit_point, t_vec3 normal, t_vec3 object_color);
+t_vec3		apply_lighting(t_scene *scene, t_object object, t_vec3 hit_point, t_vec3 normal);
+
 
 #endif

@@ -13,7 +13,7 @@ add_object(scene, huevo_izquierdo);
 t_object bebe_arnau = create_cylinder(vec3(0, 0, -5), vec3(0, 1, 0), 0.2, 0.5, vec3(0.5, 0.1, 0.8));
 add_object(scene, bebe_arnau);
 
-t_object puntita_arnau = create_sphere(vec3(0, 0.2, -5), 0.2, vec3(0.5, 0.1, 0.8));
+t_object puntita_arnau = create_sphere(vec3(0, 0.255, -5), 0.2, vec3(0.5, 0.1, 0.8));
 add_object(scene, puntita_arnau);
 
 t_object huevo_derecho = create_sphere(vec3(0.2, -0.2, -5), 0.2,  vec3(0.5, 0.1, 0.8));
@@ -23,7 +23,7 @@ add_object(scene, huevo_derecho);
 t_light light;
 light.position = vec3(0.0, 2.5, -5.0);
 light.color = vec3(1.0, 1.0, 1.0);  // Blanco para mandatory
-light.intensity = 0.6;
+light.intensity = 0.2;
 
 // Añadir luz a la escena
 scene->lights = malloc(sizeof(t_light));

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/23 16:38:35 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/23 17:10:01 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_scene	*init_scene(void)
 	scene->object_count = 0;
 	scene->lights = NULL;
 	scene->light_count = 0;
-	scene->ambient_ratio = 0.2;
+	scene->ambient_ratio = 0.5;
 	scene->ambient_color = vec3(1.0, 1.0, 1.0);
 	return (scene);
 }

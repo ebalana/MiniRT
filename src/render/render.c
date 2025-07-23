@@ -6,11 +6,49 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:54:50 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/22 16:58:30 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/07/23 16:44:22 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
+
+/*
+** rgb_to_mlx_color - Convierte valores RGB normalizados al formato de color MLX42
+**
+** Descripción:
+** Toma valores de color RGB en formato flotante (0.0-1.0) y los convierte
+** al formato de color entero de 32 bits que requiere MLX42. Realiza escalado,
+** limitación de valores y empaquetado en formato RGBA.
+**
+** Parámetros:
+** - r: Componente rojo (0.0-1.0)
+** - g: Componente verde (0.0-1.0)  
+** - b: Componente azul (0.0-1.0)
+**
+** Funcionamiento:
+** 1. Escala los valores flotantes (0-1) a enteros (0-255)
+** 2. Aplica clamp para asegurar que estén en rango válido
+** 3. Empaqueta los componentes en formato RGBA de 32 bits
+** 4. Retorna el color en formato compatible con MLX42
+**
+** Retorna:
+** - Color empaquetado en formato 0xRRGGBBAA (alpha = 0xFF)
+**
+** Nota: El formato MLX usa RGBA con alpha fijo en 0xFF (opaco)
+*/
+int rgb_to_mlx_color(double r, double g, double b)
+{
+	int ir = (int)(255.999 * r);
+	int ig = (int)(255.999 * g);
+	int ib = (int)(255.999 * b);
+
+	// Clamp values
+	if (ir > 255) ir = 255; if (ir < 0) ir = 0;
+	if (ig > 255) ig = 255; if (ig < 0) ig = 0;
+	if (ib > 255) ib = 255; if (ib < 0) ib = 0;
+
+	return (ir << 24) | (ig << 16) | (ib << 8) | 0xFF;
+}
 
 /*
 ** render_pixel - Renderiza un píxel específico usando ray tracing

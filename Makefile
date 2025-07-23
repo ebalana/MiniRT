@@ -8,7 +8,9 @@ RED = \033[0;91m
 
 NAME = miniRT
 CC = cc
-CFLAGS = -Werror -Wall -Wextra -g -fsanitize=address
+# Si volem fer que vagi mes rapid '-Ofast -flto' s'ha d'afegeix tambe a CMakeLists.txt - add_compile_options( ... -0fast -flto)
+CFLAGS = -Werror -Wall -Wextra -Ofast -flto
+# CFLAGS = -Werror -Wall -Wextra -g -fsanitize=address
 RM = rm -f
 HEADER = include/miniRT.h
 
@@ -22,18 +24,21 @@ MLX_LIB = $(MLX_DIR)/build/libmlx42.a
 MLX_INCLUDE = -I$(MLX_DIR)/include
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
-SRCS = 	src/error.c \
-		src/hit_object.c \
-		src/hooks.c \
-		src/init_utils.c \
-		src/main.c \
-		src/ray.c \
-		src/render_utils.c \
-		src/render.c \
-		src/scene.c \
-		src/shadow.c \
-		src/vec_utils.c \
-		src/vec_utils2.c \
+SRCS = 	src/main.c \
+		src/utils/error.c \
+		src/utils/hooks.c \
+		src/utils/init_utils.c \
+		src/render/render_utils.c \
+		src/render/render.c \
+		src/render/scene.c \
+		src/ray_tracing/color.c \
+		src/ray_tracing/hit_object.c \
+		src/ray_tracing/lighting.c \
+		src/ray_tracing/ray_tracer.c \
+		src/ray_tracing/ray.c \
+		src/ray_tracing/shadow.c \
+		src/math/vec_utils.c \
+		src/math/vec_utils2.c \
 
 OBJS = $(SRCS:.c=.o)
 

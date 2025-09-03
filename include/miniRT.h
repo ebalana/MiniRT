@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/23 16:44:58 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/03 14:03:00 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int			is_shadow(t_scene *scene, t_vec3 point, t_light light, t_vec3 surface_norm
 
 // error.c
 void		ft_error(void);
+// free.c
+void		free_split(char **split);
 
 // render.c
 int			rgb_to_mlx_color(double r, double g, double b);
@@ -72,6 +74,25 @@ t_vec3		ray_color(t_ray ray, t_scene *scene);
 t_vec3		clamp_color(t_vec3 color);
 t_vec3		calculate_diffuse_lighting(t_scene *scene, t_vec3 hit_point, t_vec3 normal, t_vec3 object_color);
 t_vec3		apply_lighting(t_scene *scene, t_object object, t_vec3 hit_point, t_vec3 normal);
+
+//PARSING
+// parse_vector.c
+t_vec3		parse_vector(const char *str);
+t_vec3		parse_color(const char *str);
+void		parse_line(const char *filename, t_scene *scene);
+
+// parse_components.c
+void		parse_ambient(char **tokens, t_scene *scene);
+void		parse_camera(char **tokens, t_scene *scene);
+void		parse_light(char **tokens, t_scene *scene);
+
+// parse_objects.c
+void		parse_sphere(char **tokens, t_scene *scene);
+void		parse_plane(char **tokens, t_scene *scene);
+void		parse_cylinder(char **tokens, t_scene *scene);
+
+// parse_scene.c
+void		parse_line(const char *filename, t_scene *scene);
 
 
 #endif

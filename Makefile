@@ -28,6 +28,7 @@ SRCS = 	src/main.c \
 		src/utils/error.c \
 		src/utils/hooks.c \
 		src/utils/init_utils.c \
+		src/utils/free.c \
 		src/render/render_utils.c \
 		src/render/render.c \
 		src/render/scene.c \
@@ -38,6 +39,11 @@ SRCS = 	src/main.c \
 		src/ray_tracing/shadow.c \
 		src/math/vec_utils.c \
 		src/math/vec_utils2.c \
+		src/parsing/parse_vector.c \
+		src/parsing/parse_scene.c \
+		src/parsing/parse_components.c \
+		src/parsing/parse_objects.c \
+
 
 OBJS = $(SRCS:.c=.o)
 

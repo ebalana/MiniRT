@@ -6,7 +6,7 @@
 /*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/03 14:03:00 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/03 15:38:31 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ t_vec3		apply_lighting(t_scene *scene, t_object object, t_vec3 hit_point, t_vec3
 // parse_vector.c
 t_vec3		parse_vector(const char *str);
 t_vec3		parse_color(const char *str);
-void		parse_line(const char *filename, t_scene *scene);
 
 // parse_components.c
 void		parse_ambient(char **tokens, t_scene *scene);

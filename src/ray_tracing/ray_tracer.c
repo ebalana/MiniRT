@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_tracer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:55:29 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/23 16:45:57 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:36:30 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	find_closest_intersection(t_scene *scene, t_ray ray, double *closest_t)
 		{
 			if (hit_sphere(scene->objects[i].data.sphere, ray, &t) >= 0)
 			{
+				//printf("Hit sphere at t=%.2f\n", t);
 				if (*closest_t < 0 || t < *closest_t)
 				{
 					*closest_t = t;
@@ -101,6 +102,7 @@ int	find_closest_intersection(t_scene *scene, t_ray ray, double *closest_t)
 		{
 			if (hit_plane(scene->objects[i].data.plane, ray, &t) >= 0)
 			{
+				//printf("Hit plane at t=%.2f\n", t);
 				if (*closest_t < 0 || t < *closest_t)
 				{
 					*closest_t = t;
@@ -112,6 +114,7 @@ int	find_closest_intersection(t_scene *scene, t_ray ray, double *closest_t)
 		{
 			if (hit_cylinder(scene->objects[i].data.cylinder, ray, &t) >= 0)
 			{
+				//printf("Hit cylinder at t=%.2f\n", t);
 				if (*closest_t < 0 || t < *closest_t)
 				{
 					*closest_t = t;

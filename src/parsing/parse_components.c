@@ -6,7 +6,7 @@
 /*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:40:05 by dcampas-          #+#    #+#             */
-/*   Updated: 2025/09/03 14:01:17 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:08:41 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,27 @@ void	parse_camera(char **tokens, t_scene *scene)
 		ft_error();
 }
 
+static void	add_light_to_scene(t_scene *scene, t_light light)
+{
+	t_light	*new_lights;
+	int		i;
+
+	new_lights = malloc(sizeof(t_light) * (scene->light_count + 1));
+	if (!new_lights)
+		ft_error();
+	i = 0;
+	while (i < scene->light_count)
+	{
+		new_lights[i] = scene->lights[i];
+		i++;
+	}
+	new_lights[scene->light_count] = light;
+	if (scene->lights)
+		free(scene->lights);
+	scene->lights = new_lights;
+	scene->light_count++;
+}
+
 /*Validamos que existan todos los tokens.
 Parseamos posición, intensidad y color.
 Validamos que la intensidad esté entre 0 y 1.
@@ -55,11 +76,7 @@ void	parse_light(char **tokens, t_scene *scene)
 	if (light.intensity < 0.0 || light.intensity > 1.0)
 		ft_error();
 	light.color = parse_color(tokens[3]);
-	scene->lights = realloc(scene->lights, sizeof(t_light) * (scene->light_count + 1));
-	if (!scene->lights)
-		ft_error();
-	scene->lights[scene->light_count] = light;
-	scene->light_count++;
+	add_light_to_scene(scene, light);
 }
 
 

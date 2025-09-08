@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:54:50 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/23 16:44:22 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/08 13:02:17 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	render_pixel(t_render_data *data, t_pixel *pixel, t_viewport *viewport)
 				vec_scale(viewport->vertical, pixel->v));
 	direction = vec_sub(direction, viewport->origin);
 	ray.origin = viewport->origin;
-	ray.direction = direction;
+	ray.direction = vec_normalize(direction);
+	//printf("Ray direction for pixel (%d, %d): (%.2f, %.2f, %.2f)\n", pixel->i, pixel->j, ray.direction.x, ray.direction.y, ray.direction.z);
 	color = ray_color(ray, data->scene);
 	mlx_color = rgb_to_mlx_color(color.x, color.y, color.z);
 	mlx_put_pixel(data->img, pixel->i, HEIGHT - 1 - pixel->j, mlx_color);

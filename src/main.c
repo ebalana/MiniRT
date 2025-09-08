@@ -6,14 +6,14 @@
 /*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/03 16:40:30 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:37:58 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-/*
-// En tu main(), crear la escena hardcodeada:
+
+/* // En tu main(), crear la escena hardcodeada:
  int main(void)
 {
 	mlx_t		*mlx;
@@ -29,7 +29,7 @@
 		return (EXIT_FAILURE);
 	}
 
-	 ----------------------------- HARDCODED PARAMS -----------------------------
+	//----------------------------- HARDCODED PARAMS -----------------------------
 	// Configurar cámara hardcodeada
 	scene->camera.position = vec3(0, 0.5, 2);
 	scene->camera.direction = vec3(0, 0, -1);
@@ -77,7 +77,7 @@
 		ft_error();
 	scene->lights[0] = light;
 	scene->light_count = 1;
-	------------------------------------------------------------------------
+	//------------------------------------------------------------------------
 
 	mlx = init_mlx();
 	img = create_image(mlx);	
@@ -93,78 +93,96 @@
 	mlx_terminate(mlx);
 	free_scene(scene);
 	return (EXIT_SUCCESS);
-}
- */
+} */
 
 
-/* int main(int argc, char **argv)
+#include "../include/miniRT.h"
+
+static void	validate_scene(t_scene *scene)
 {
-	mlx_t			*mlx;
-	mlx_image_t		*img;
-	t_scene			*scene;
-	t_render_data	render_data;
+	if (scene->light_count == 0)
+	{
+		printf("Error: Scene must have at least one light\n");
+		free_scene(scene);
+		exit(EXIT_FAILURE);
+	}
+	if (scene->object_count == 0)
+	{
+		printf("Error: Scene must have at least one object\n");
+		free_scene(scene);
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	check_arguments(int argc, char **argv)
+{
+	int		len;
+	char	*extension;
 
 	if (argc != 2)
 	{
 		printf("Usage: %s <scene.rt>\n", argv[0]);
-		return (EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
+	len = ft_strlen(argv[1]);
+	if (len < 4)
+	{
+		printf("Error: Invalid file format\n");
+		exit(EXIT_FAILURE);
+	}
+	extension = argv[1] + len - 3;
+	if (ft_strncmp(extension, ".rt", 3) != 0)
+	{
+		printf("Error: File must have .rt extension\n");
+		exit(EXIT_FAILURE);
+	}
+}
 
-	// Inicializar la escena desde el archivo .rt
+int	main(int argc, char **argv)
+{
+	t_scene			*scene;
+	mlx_t			*mlx;
+	mlx_image_t		*img;
+	t_render_data	render_data;
+
+	check_arguments(argc, argv);
+	// 1. Initialize and parse scene
 	scene = init_scene();
 	if (!scene)
-		ft_error();
+	{
+		printf("Error: Failed to initialize scene\n");
+		return (EXIT_FAILURE);
+	}
 	parse_line(argv[1], scene);
-
-	// Inicializar MLX y la imagen
+	validate_scene(scene);
+	printf("Scene loaded successfully:\n");
+	printf("- Objects: %d\n", scene->object_count);
+	printf("- Lights: %d\n", scene->light_count);
+	printf("- Camera FOV: %.1f\n", scene->camera.fov);
+	// 2. Initialize MLX and rendering
 	mlx = init_mlx();
+	if (!mlx)
+	{
+		free_scene(scene);
+		return (EXIT_FAILURE);
+	}
 	img = create_image(mlx);
+	if (!img)
+	{
+		mlx_terminate(mlx);
+		free_scene(scene);
+		return (EXIT_FAILURE);
+	}
+	// 3. Setup rendering
 	init_render_data(&render_data, img, scene);
 	display_image(mlx, img);
-
 	printf("Starting progressive render...\n");
-
-	// Renderizado progresivo
+	// 4. Start render loop
 	mlx_loop_hook(mlx, render_scene, &render_data);
 	mlx_key_hook(mlx, key_hook, mlx);
 	mlx_loop(mlx);
-
+	// 5. Cleanup
 	mlx_terminate(mlx);
 	free_scene(scene);
 	return (EXIT_SUCCESS);
-}
- */
-
-int main(void)
-{
-	t_scene *scene;
-
-	scene = init_scene();
-	if (!scene)
-		return (1);
-
-	parse_line("scene/test_min.rt", scene);
-
-	printf("Scene parsed successfully!\n");
-	printf("Objects: %d\n", scene->object_count);
-	printf("Lights: %d\n", scene->light_count);
-
-	for (int i = 0; i < scene->object_count; i++)
-		printf("Object %d: type=%d color=(%.2f,%.2f,%.2f)\n", 
-			i,
-			scene->objects[i].type,
-			scene->objects[i].color.x,
-			scene->objects[i].color.y,
-			scene->objects[i].color.z);
-
-	for (int i = 0; i < scene->light_count; i++)
-		printf("Light %d: intensity=%.2f color=(%.2f,%.2f,%.2f)\n", 
-			i,
-			scene->lights[i].intensity,
-			scene->lights[i].color.x,
-			scene->lights[i].color.y,
-			scene->lights[i].color.z);
-
-	free_scene(scene);
-	return 0;
 }

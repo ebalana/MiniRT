@@ -1,11 +1,25 @@
-# Ambient light
+# Simple test scene for miniRT
+
+# Ambient lighting: ratio color
 A 0.2 255,255,255
 
-# Camera
-C 0,0,0 0,0,1 60
+# Camera: position direction fov
+C 0,0.5,2 0,0,-1 90
 
-# Light
-L 0,0,5 0.7 255,255,255
+# Light: position intensity color  
+L 0,2.5,-5 0.6 255,255,255
 
-# Sphere
-sp 0,0,5 1 255,0,0
+# Red sphere
+sp -1.5,-1,-8 0.5 204,26,26
+
+# Blue sphere  
+sp 0,0,-5 0.5 26,26,204
+
+# Green sphere
+sp 1.5,1,-8 0.5 26,204,26
+
+# Gray floor plane
+pl 0,-2,0 0,1,0 128,128,128
+
+# Gray back wall
+pl 0,0,-10 0,0,1 128,128,128

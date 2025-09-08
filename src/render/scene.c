@@ -6,7 +6,7 @@
 /*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/03 15:52:12 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:12:56 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	add_object(t_scene *scene, t_object obj)
 	new_objects = realloc(scene->objects,
 			sizeof(t_object) * (scene->object_count + 1));
 	if (!new_objects)
-		return (-1);
+		ft_error();
 	scene->objects = new_objects;
 	scene->objects[scene->object_count] = obj;
 	scene->object_count++;

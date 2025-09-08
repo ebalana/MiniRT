@@ -6,7 +6,7 @@
 /*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:54:50 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/08 13:02:17 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:41:33 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@
 */
 int rgb_to_mlx_color(double r, double g, double b)
 {
+	//Ilumination
+	r = pow(r, 1.0/2.0);
+	g = pow(g, 1.0/2.0);
+	b = pow(b, 1.0/2.0);
+
 	int ir = (int)(255.999 * r);
 	int ig = (int)(255.999 * g);
 	int ib = (int)(255.999 * b);

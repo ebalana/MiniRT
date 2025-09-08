@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lighting.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:59:28 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/23 16:41:58 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/08 15:23:17 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,6 @@ t_vec3	clamp_color(t_vec3 color)
 ** Retorna:
 ** - Color difuso calculado
 */
-// t_vec3	calculate_diffuse_lighting(t_scene *scene, t_vec3 hit_point, t_vec3 normal)
-// {
-// 	t_vec3	light_dir;
-// 	double	light_intensity;
-// 	t_vec3	diffuse;
-
-// 	light_dir = vec_normalize(vec_sub(scene->lights[0].position, hit_point));
-// 	light_intensity = fmax(0.0, vec_dot(normal, light_dir));
-// 	diffuse = vec_scale(scene->lights[0].color,
-// 			light_intensity * scene->lights[0].intensity);
-// 	if (is_shadow(scene, hit_point, scene->lights[0], normal))
-// 		diffuse = vec_scale(diffuse, 0.3);
-// 	return (diffuse);
-// }
 t_vec3	calculate_diffuse_lighting(t_scene *scene, t_vec3 hit_point, t_vec3 normal, t_vec3 object_color)
 {
 	t_vec3	light_dir;
@@ -84,7 +70,7 @@ t_vec3	calculate_diffuse_lighting(t_scene *scene, t_vec3 hit_point, t_vec3 norma
 	diffuse = vec_scale(light_contribution, light_intensity * scene->lights[0].intensity);
 
 	if (is_shadow(scene, hit_point, scene->lights[0], normal))
-		diffuse = vec_scale(diffuse, 0.3);
+		diffuse = vec_scale(diffuse, 0.8);
 
 	return (diffuse);
 }

@@ -1,7 +1,7 @@
 # MiniRT scene: full studio with three spheres
 
 # Ambient lighting: ratio color
-A 0.2 255,255,255
+A 0.1 255,255,255
 
 # Camera: position direction fov
 C 0,0,0 0,0,-1 90

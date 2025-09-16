@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:56:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/08 11:37:58 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/16 18:35:32 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,10 +155,6 @@ int	main(int argc, char **argv)
 	}
 	parse_line(argv[1], scene);
 	validate_scene(scene);
-	printf("Scene loaded successfully:\n");
-	printf("- Objects: %d\n", scene->object_count);
-	printf("- Lights: %d\n", scene->light_count);
-	printf("- Camera FOV: %.1f\n", scene->camera.fov);
 	// 2. Initialize MLX and rendering
 	mlx = init_mlx();
 	if (!mlx)

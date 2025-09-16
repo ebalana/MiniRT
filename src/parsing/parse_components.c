@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_components.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:40:05 by dcampas-          #+#    #+#             */
-/*   Updated: 2025/09/08 11:08:41 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/16 19:32:38 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	parse_camera(char **tokens, t_scene *scene)
 	if (!tokens[1] || !tokens[2] || !tokens[3])
 		ft_error();
 	scene->camera.position = parse_vector(tokens[1]);
-	scene->camera.direction = parse_vector(tokens[2]);
+	scene->camera.direction = vec_normalize(parse_vector(tokens[2]));
 	scene->camera.fov = ft_atof(tokens[3]);
 	if (scene->camera.fov <= 0.0 || scene->camera.fov >= 180.0)
 		ft_error();
@@ -78,5 +78,3 @@ void	parse_light(char **tokens, t_scene *scene)
 	light.color = parse_color(tokens[3]);
 	add_light_to_scene(scene, light);
 }
-
-

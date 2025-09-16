@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/08 15:12:56 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/16 17:48:50 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,21 +53,18 @@ t_object	create_cylinder(t_vec3 center, t_vec3 axis, double radius, double heigh
 	return (obj);
 }
 
-// Inicializar escena
 t_scene	*init_scene(void)
 {
-	t_scene	*scene;
+    t_scene	*scene;
 
-	scene = malloc(sizeof(t_scene));
-	if (!scene)
-		return (NULL);
-	scene->objects = NULL;
-	scene->object_count = 0;
-	scene->lights = NULL;
-	scene->light_count = 0;
-	scene->ambient_ratio = 0.5;
-	scene->ambient_color = vec3(1.0, 1.0, 1.0);
-	return (scene);
+    scene = malloc(sizeof(t_scene));
+    if (!scene)
+        return (NULL);
+    scene->objects = NULL;
+    scene->object_count = 0;
+    scene->lights = NULL;
+    scene->light_count = 0;
+    return (scene);
 }
 
 // Añadir objeto a la escena
@@ -82,6 +79,6 @@ int	add_object(t_scene *scene, t_object obj)
 	scene->objects = new_objects;
 	scene->objects[scene->object_count] = obj;
 	scene->object_count++;
-	printf("Objects count: %d\n", scene->object_count);
+	// printf("Objects count: %d\n", scene->object_count);
 	return (0);
 }

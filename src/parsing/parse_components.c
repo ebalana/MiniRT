@@ -6,16 +6,12 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:40:05 by dcampas-          #+#    #+#             */
-/*   Updated: 2025/09/16 19:32:38 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:01:00 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-/*Comprobamos que existen los tokens de intensidad y color.
-Convertimos la intensidad a double con ft_atof().
-Validamos que esté entre 0 y 1.
-Parseamos el color con tu función parse_color() y lo guardamos en la escena.*/
 void	parse_ambient(char **tokens, t_scene *scene)
 {
 	if (!tokens[1] || !tokens[2])
@@ -26,9 +22,6 @@ void	parse_ambient(char **tokens, t_scene *scene)
 	scene->ambient_color = parse_color(tokens[2]);
 }
 
-/*Comprobamos que existan los 3 tokens.
-Parseamos la posición y dirección con parse_vector().
-Parseamos el FOV y validamos que esté entre 0 y 180 grados.*/
 void	parse_camera(char **tokens, t_scene *scene)
 {
 	if (!tokens[1] || !tokens[2] || !tokens[3])
@@ -61,10 +54,6 @@ static void	add_light_to_scene(t_scene *scene, t_light light)
 	scene->light_count++;
 }
 
-/*Validamos que existan todos los tokens.
-Parseamos posición, intensidad y color.
-Validamos que la intensidad esté entre 0 y 1.
-Añadimos la luz al array dinámico de la escena, aumentando light_count.*/
 void	parse_light(char **tokens, t_scene *scene)
 {
 	t_light	light;

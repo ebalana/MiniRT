@@ -1,34 +1,11 @@
-# MiniRT scene: full studio with three spheres
-
-# Ambient lighting: ratio color
-A 0.1 255,255,255
-
-# Camera: position direction fov
-C 0,0,0 0,0,-1 90
-
-# Light: position intensity color
-L 0,2.5,-5 0.4 255,255,255
-
-# Red sphere
-sp -1.5,-1,-5 0.5 204,26,26
-
-# Blue sphere
-sp 0,0,-5 0.5 26,26,204
-
-# Green sphere
-sp 1.5,1,-5 0.5 26,204,26
-
-# Gray floor plane
-pl 0,-2,0 0,1,0 128,128,128
-
-# Gray back wall
-pl 0,0,-10 0,0,1 128,128,128
-
-# Blue left wall plane
-pl -2,0,0 1,0,0 26,26,204
-
-# Red right wall plane
-pl 2,0,0 -1,0,0 204,26,26
-
-# White ceiling plane
-pl 0,3,0 0,-1,0 128,128,128
+A                              0.2         255,255,255
+C  0,0,0          0,0,-1       90
+L  0,2.5,-5                    0.6         255,255,255
+sp -1.5,-1,-5                  0.5         204,26,26
+sp 0,0,-5                      0.5         26,26,204
+sp 1.5,1,-5                    0.5         26,204,26
+pl 0,-2,0         0,1,0                    128,128,128
+pl 0,0,-10        0,0,1                    128,128,128
+pl -2,0,0         1,0,0                    26,26,204
+pl 2,0,0          -1,0,0                   204,26,26
+pl 0,3,0          0,-1,0                   128,128,128

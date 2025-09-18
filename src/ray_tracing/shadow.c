@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:47:15 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/16 18:29:28 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:17:19 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,23 @@
 int	check_shadow(t_object object, t_ray shadow_ray, double light_distance)
 {
 	double	t;
-
+	
 	if (object.type == SPHERE)
 	{
 		if (hit_sphere(object.data.sphere, shadow_ray, &t) >= 0 && \
-			t < light_distance)
+			t > 0.01 && t < (light_distance - 0.01))
 			return (1);
 	}
 	else if (object.type == PLANE)
 	{
 		if (hit_plane(object.data.plane, shadow_ray, &t) >= 0 && \
-			t < light_distance)
+			t > 0.01 && t < (light_distance - 0.01))
 			return (1);
 	}
 	else if (object.type == CYLINDER)
 	{
 		if (hit_cylinder(object.data.cylinder, shadow_ray, &t) >= 0 && \
-			t < light_distance)
+			t > 0.01 && t < (light_distance - 0.01))
 			return (1);
 	}
 	return (0);

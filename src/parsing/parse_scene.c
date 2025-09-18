@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_scene.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 12:48:38 by dcampas-          #+#    #+#             */
-/*   Updated: 2025/09/03 14:02:59 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:00:06 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	handle_tokens(char **tokens, t_scene *scene)
 		ft_error();
 }
 
-void		parse_line(const char *filename, t_scene *scene)
+void	parse_line(const char *filename, t_scene *scene)
 {
 	int		fd;
 	char	*line;
@@ -39,7 +39,8 @@ void		parse_line(const char *filename, t_scene *scene)
 	fd = open(filename, O_RDONLY);
 	if (fd < 0)
 		ft_error();
-	while ((line = get_next_line(fd)))
+	line = get_next_line(fd);
+	while (line)
 	{
 		if (*line == '\n' || *line == '#')
 		{
@@ -52,6 +53,7 @@ void		parse_line(const char *filename, t_scene *scene)
 		handle_tokens(tokens, scene);
 		free_split(tokens);
 		free(line);
+		line = get_next_line(fd);
 	}
 	close(fd);
 }

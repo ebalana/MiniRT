@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray_tracer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/23 13:55:29 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/08 15:12:49 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:35:13 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_vec3	calculate_surface_normal(t_object object, t_vec3 hit_point)
 	}
 	else if (object.type == PLANE)
 	{
-		normal = object.data.plane.normal;
+		normal = vec_normalize(object.data.plane.normal);
 	}
 	else if (object.type == CYLINDER)
 	{
@@ -57,7 +57,7 @@ t_vec3	calculate_surface_normal(t_object object, t_vec3 hit_point)
 			normal = vec_normalize(vec_sub(hit_point, 
 				vec_add(cyl.center, vec_scale(cyl.axis, projection))));
 	}
-	return (normal);
+	return (vec_normalize(normal));
 }
 
 /*

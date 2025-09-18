@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_vector.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 12:57:17 by dcampas-          #+#    #+#             */
-/*   Updated: 2025/09/03 14:04:19 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/18 17:53:17 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_vec3	parse_vector(const char *str)
 	free_split(parts);
 	return (v);
 }
-
 
 t_vec3	parse_color(const char *str)
 {

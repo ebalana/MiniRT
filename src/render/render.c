@@ -6,25 +6,37 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 15:54:50 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/18 18:35:38 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:12:26 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-int rgb_to_mlx_color(double r, double g, double b)
+int	rgb_to_mlx_color(double r, double g, double b)
 {
-	r = pow(r, 1.0/2.0);
-	g = pow(g, 1.0/2.0);
-	b = pow(b, 1.0/2.0);
-	int ir = (int)(255.999 * r);
-	int ig = (int)(255.999 * g);
-	int ib = (int)(255.999 * b);
-	if (ir > 255) ir = 255; if (ir < 0) ir = 0;
-	if (ig > 255) ig = 255; if (ig < 0) ig = 0;
-	if (ib > 255) ib = 255; if (ib < 0) ib = 0;
+	int	ir;
+	int	ig;
+	int	ib;
 
-	return (ir << 24) | (ig << 16) | (ib << 8) | 0xFF;
+	r = pow(r, 1.0 / 2.0);
+	g = pow(g, 1.0 / 2.0);
+	b = pow(b, 1.0 / 2.0);
+	ir = (int)(255.999 * r);
+	ig = (int)(255.999 * g);
+	ib = (int)(255.999 * b);
+	if (ir > 255)
+		ir = 255;
+	if (ir < 0)
+		ir = 0;
+	if (ig > 255)
+		ig = 255;
+	if (ig < 0)
+		ig = 0;
+	if (ib > 255)
+		ib = 255;
+	if (ib < 0)
+		ib = 0;
+	return ((ir << 24) | (ig << 16) | (ib << 8) | 0xFF);
 }
 
 void	render_pixel(t_render_data *data, t_pixel *pixel, t_viewport *viewport)
@@ -39,7 +51,7 @@ void	render_pixel(t_render_data *data, t_pixel *pixel, t_viewport *viewport)
 				vec_scale(viewport->vertical, pixel->v));
 	direction = vec_sub(direction, viewport->origin);
 	ray.origin = viewport->origin;
-	ray.direction = vec_normalize(direction);	
+	ray.direction = vec_normalize(direction);
 	color = ray_color(ray, data->scene);
 	mlx_color = rgb_to_mlx_color(color.x, color.y, color.z);
 	mlx_put_pixel(data->img, pixel->i, HEIGHT - 1 - pixel->j, mlx_color);

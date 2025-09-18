@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 13:18:11 by dcampas-          #+#    #+#             */
-/*   Updated: 2025/09/18 17:58:10 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:09:00 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,16 @@ void	parse_plane(char **tokens, t_scene *scene)
 
 void	parse_cylinder(char **tokens, t_scene *scene)
 {
-	t_object	obj;
+	t_cylinder	params;
+	t_object			obj;
 
 	if (!tokens[1] || !tokens[2] || !tokens[3] || !tokens[4] || !tokens[5])
 		ft_error();
-	obj = create_cylinder(parse_vector(tokens[1]), parse_vector(tokens[2]), \
-		ft_atof(tokens[3]), ft_atof(tokens[4]), parse_color(tokens[5]));
+	params.center = parse_vector(tokens[1]);
+	params.axis = parse_vector(tokens[2]);
+	params.radius = ft_atof(tokens[3]);
+	params.height = ft_atof(tokens[4]);
+	params.color = parse_color(tokens[5]);
+	obj = create_cylinder(params);
 	add_object(scene, obj);
 }

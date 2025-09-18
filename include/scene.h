@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 15:41:47 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/22 16:36:41 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:08:58 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ typedef struct	s_pixel
 
 t_object create_sphere(t_vec3 center, double radius, t_vec3 color);
 t_object create_plane(t_vec3 point, t_vec3 normal, t_vec3 color);
-t_object create_cylinder(t_vec3 center, t_vec3 axis, double radius, double height, t_vec3 color);
+t_object create_cylinder(t_cylinder params);
 t_scene *init_scene(void);
 int add_object(t_scene *scene, t_object obj);
 

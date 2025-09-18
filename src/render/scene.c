@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/18 19:26:31 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:06:15 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,17 +36,17 @@ t_object	create_plane(t_vec3 point, t_vec3 normal, t_vec3 color)
 	return (obj);
 }
 
-t_object	create_cylinder(t_vec3 center, t_vec3 axis, double radius, double height, t_vec3 color)
+t_object	create_cylinder(t_cylinder params)
 {
 	t_object	obj;
 
 	obj.type = CYLINDER;
-	obj.color = color;
-	obj.data.cylinder.center = center;
-	obj.data.cylinder.axis = vec_normalize(axis);
-	obj.data.cylinder.radius = radius;
-	obj.data.cylinder.height = height;
-	obj.data.cylinder.color = color;
+	obj.color = params.color;
+	obj.data.cylinder.center = params.center;
+	obj.data.cylinder.axis = vec_normalize(params.axis);
+	obj.data.cylinder.radius = params.radius;
+	obj.data.cylinder.height = params.height;
+	obj.data.cylinder.color = params.color;
 	return (obj);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 13:47:15 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/18 18:34:14 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 20:23:38 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	check_shadow(t_object object, t_ray shadow_ray, double light_distance)
 {
 	double	t;
-	
+
 	if (object.type == SPHERE)
 	{
 		if (hit_sphere(object.data.sphere, shadow_ray, &t) >= 0 && \
@@ -37,7 +37,7 @@ int	check_shadow(t_object object, t_ray shadow_ray, double light_distance)
 	return (0);
 }
 
-int	is_shadow(t_scene *scene, t_vec3 point, t_light light, t_vec3 surface_normal)
+int	is_shadow(t_scene *scene, t_vec3 point, t_light light, t_vec3 surf_normal)
 {
 	double	light_distance;
 	int		i;
@@ -47,7 +47,7 @@ int	is_shadow(t_scene *scene, t_vec3 point, t_light light, t_vec3 surface_normal
 	light_dir = vec_sub(light.position, point);
 	light_distance = vec_length(light_dir);
 	light_dir = vec_normalize(light_dir);
-	shadow_ray.origin = vec_add(point, vec_scale(surface_normal, 0.001));
+	shadow_ray.origin = vec_add(point, vec_scale(surf_normal, 0.001));
 	shadow_ray.direction = light_dir;
 	i = 0;
 	while (i < scene->object_count)

@@ -6,13 +6,12 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/16 17:48:50 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:35:53 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-// Crear sphere
 t_object	create_sphere(t_vec3 center, double radius, t_vec3 color)
 {
 	t_object	obj;
@@ -25,7 +24,6 @@ t_object	create_sphere(t_vec3 center, double radius, t_vec3 color)
 	return (obj);
 }
 
-// Crear plane
 t_object	create_plane(t_vec3 point, t_vec3 normal, t_vec3 color)
 {
 	t_object	obj;
@@ -38,7 +36,6 @@ t_object	create_plane(t_vec3 point, t_vec3 normal, t_vec3 color)
 	return (obj);
 }
 
-// Crear cylinder
 t_object	create_cylinder(t_vec3 center, t_vec3 axis, double radius, double height, t_vec3 color)
 {
 	t_object	obj;
@@ -67,7 +64,6 @@ t_scene	*init_scene(void)
     return (scene);
 }
 
-// Añadir objeto a la escena
 int	add_object(t_scene *scene, t_object obj)
 {
 	t_object	*new_objects;
@@ -79,6 +75,5 @@ int	add_object(t_scene *scene, t_object obj)
 	scene->objects = new_objects;
 	scene->objects[scene->object_count] = obj;
 	scene->object_count++;
-	// printf("Objects count: %d\n", scene->object_count);
 	return (0);
 }

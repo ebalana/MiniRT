@@ -6,13 +6,12 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 14:08:03 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/23 16:10:24 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:36:27 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-// Inicializar MLX
 mlx_t	*init_mlx(void)
 {
 	mlx_t	*mlx;
@@ -23,7 +22,6 @@ mlx_t	*init_mlx(void)
 	return (mlx);
 }
 
-// Crear imagen MLX
 mlx_image_t	*create_image(mlx_t *mlx)
 {
 	mlx_image_t	*img;
@@ -37,7 +35,6 @@ mlx_image_t	*create_image(mlx_t *mlx)
 	return (img);
 }
 
-// Función para inicializar datos de renderizado
 void	init_render_data(t_render_data *red, mlx_image_t *img, t_scene *scene)
 {
 	red->img = img;
@@ -46,7 +43,6 @@ void	init_render_data(t_render_data *red, mlx_image_t *img, t_scene *scene)
 	red->rendering_complete = 0;
 }
 
-// Mostrar imagen en ventana
 void	display_image(mlx_t *mlx, mlx_image_t *img)
 {
 	if (mlx_image_to_window(mlx, img, 0, 0) == -1)
@@ -56,7 +52,6 @@ void	display_image(mlx_t *mlx, mlx_image_t *img)
 	}
 }
 
-// Liberar memoria de la escena
 void	free_scene(t_scene *scene)
 {
 	if (scene)

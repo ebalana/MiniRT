@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   miniRT.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/03 15:38:31 by dcampas-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:45:42 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void		get_render_rows(int row, int rowsxframe, int *start_row, int *end_row);
 void		get_camera_vectors(t_camera *camera, double aspect_ratio, t_viewport *viewport);
 
 // ray_tracer.c
+t_vec3		calculate_surface_normal(t_object object, t_vec3 hit_point);
+int			find_closest_intersection(t_scene *scene, t_ray ray, double *closest_t);
 t_vec3		ray_color(t_ray ray, t_scene *scene);
 
 // lighting.c

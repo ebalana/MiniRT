@@ -6,19 +6,17 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 13:32:18 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/22 13:37:12 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:31:47 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/miniRT.h"
 
-// Producto escalar: devuelve un valor que representa cuánto se alinean v1 y v2
 double	vec_dot(t_vec3 v1, t_vec3 v2)
 {
 	return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
 }
 
-// Producto vectorial: devuelve un vector perpendicular a v1 y v2
 t_vec3	vec_cross(t_vec3 v1, t_vec3 v2)
 {
 	t_vec3	result;
@@ -29,7 +27,6 @@ t_vec3	vec_cross(t_vec3 v1, t_vec3 v2)
 	return (result);
 }
 
-// Longitud (módulo) del vector: ||v||
 double	vec_length(t_vec3 v)
 {
 	double	dot_product;
@@ -38,7 +35,6 @@ double	vec_length(t_vec3 v)
 	return (sqrt(dot_product));
 }
 
-// Normaliza el vector: result = v / ||v|| (misma dirección, longitud 1)
 t_vec3	vec_normalize(t_vec3 v)
 {
 	double	length;

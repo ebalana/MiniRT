@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:05:01 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/07/22 13:37:14 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 18:31:27 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_vec3	vec3(double x, double y, double z)
 	return (v);
 }
 
-// Suma de vectores: result = v1 + v2
 t_vec3	vec_add(t_vec3 v1, t_vec3 v2)
 {
 	t_vec3	result;
@@ -33,7 +32,6 @@ t_vec3	vec_add(t_vec3 v1, t_vec3 v2)
 	return (result);
 }
 
-// Resta de vectores: result = v1 - v2
 t_vec3	vec_sub(t_vec3 v1, t_vec3 v2)
 {
 	t_vec3	result;
@@ -44,7 +42,6 @@ t_vec3	vec_sub(t_vec3 v1, t_vec3 v2)
 	return (result);
 }
 
-// Multiplicación por escalar: result = v * scalar
 t_vec3	vec_scale(t_vec3 v, double scalar)
 {
 	t_vec3	result;
@@ -55,7 +52,6 @@ t_vec3	vec_scale(t_vec3 v, double scalar)
 	return (result);
 }
 
-// División por escalar: result = v / scalar
 t_vec3	vec_div(t_vec3 v, double scalar)
 {
 	t_vec3	result;

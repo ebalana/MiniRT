@@ -6,7 +6,7 @@
 /*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/01 12:23:58 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/18 18:45:42 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/18 19:11:42 by ebalana-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@
 #define HEIGHT 1280
 
 // main.c
-int			rgb_to_mlx_color(double r, double g, double b);
+void		validate_scene(t_scene *scene);
+void		check_arguments(int argc, char **argv);
+int			init_and_parse(int argc, char **argv, t_scene **scene);
+int			init_and_render(t_scene *scene);
 
 // init_utils.c
 mlx_t		*init_mlx(void);
@@ -78,6 +81,7 @@ t_vec3		calculate_diffuse_lighting(t_scene *scene, t_vec3 hit_point, t_vec3 norm
 t_vec3		apply_lighting(t_scene *scene, t_object object, t_vec3 hit_point, t_vec3 normal);
 
 //PARSING
+
 // parse_vector.c
 t_vec3		parse_vector(const char *str);
 t_vec3		parse_color(const char *str);

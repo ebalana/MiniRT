@@ -33,6 +33,7 @@ SRCS = 	src/main.c \
 		src/render/render.c \
 		src/render/scene.c \
 		src/ray_tracing/hit_object.c \
+		src/ray_tracing/hit_cylinder.c \
 		src/ray_tracing/lighting.c \
 		src/ray_tracing/ray_tracer.c \
 		src/ray_tracing/ray.c \

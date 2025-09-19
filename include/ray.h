@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 14:05:43 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/18 18:44:49 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/19 11:53:53 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAY_H
 # define RAY_H
 
-#include "miniRT.h"
+# include "miniRT.h"
 
 typedef struct s_ray
 {

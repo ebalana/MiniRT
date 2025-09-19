@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   scene.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ebalana- <ebalana-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcampas- <dcampas-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 16:34:06 by ebalana-          #+#    #+#             */
-/*   Updated: 2025/09/18 20:06:15 by ebalana-         ###   ########.fr       */
+/*   Updated: 2025/09/19 11:54:11 by dcampas-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_object	create_sphere(t_vec3 center, double radius, t_vec3 color)
 
 	obj.type = SPHERE;
 	obj.color = color;
-	obj.data.sphere.center = center;
-	obj.data.sphere.radius = radius;
-	obj.data.sphere.color = color;
+	obj.u_data.sphere.center = center;
+	obj.u_data.sphere.radius = radius;
+	obj.u_data.sphere.color = color;
 	return (obj);
 }
 
@@ -30,9 +30,9 @@ t_object	create_plane(t_vec3 point, t_vec3 normal, t_vec3 color)
 
 	obj.type = PLANE;
 	obj.color = color;
-	obj.data.plane.point = point;
-	obj.data.plane.normal = vec_normalize(normal);
-	obj.data.plane.color = color;
+	obj.u_data.plane.point = point;
+	obj.u_data.plane.normal = vec_normalize(normal);
+	obj.u_data.plane.color = color;
 	return (obj);
 }
 
@@ -42,11 +42,11 @@ t_object	create_cylinder(t_cylinder params)
 
 	obj.type = CYLINDER;
 	obj.color = params.color;
-	obj.data.cylinder.center = params.center;
-	obj.data.cylinder.axis = vec_normalize(params.axis);
-	obj.data.cylinder.radius = params.radius;
-	obj.data.cylinder.height = params.height;
-	obj.data.cylinder.color = params.color;
+	obj.u_data.cylinder.center = params.center;
+	obj.u_data.cylinder.axis = vec_normalize(params.axis);
+	obj.u_data.cylinder.radius = params.radius;
+	obj.u_data.cylinder.height = params.height;
+	obj.u_data.cylinder.color = params.color;
 	return (obj);
 }
 
